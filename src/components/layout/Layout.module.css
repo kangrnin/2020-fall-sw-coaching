@@ -1,0 +1,44 @@
+
+.toolbar {
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.toolbar > * {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.title-container {
+
+}
+
+.title {
+    display: inline-block;
+    margin: 0px 10px !important;
+}
+
+.subtitle {
+    color: lightgray;
+    display: inline-block;
+    margin: 0px 10px !important;
+}
+
+.btn-container {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.user-icon {
+    margin-right: 5px;
+}
+
+.user {
+    margin-right: 10px !important;
+}
+
+.btn {
+    margin: 0px 5px;
+}
