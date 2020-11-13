@@ -13,7 +13,13 @@ import Register from './components/Register';
 import GuestBookForm from './components/GuestBookForm';
 import GuestBookTable from './components/GuestBookTable';
 
+import styles from './App.module.css';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
+
 function App() {
+	const [user, setUser] = useState();
+	
 	const firebaseInit = async () => {
 		const firebaseConfig = {
 			apiKey: 'AIzaSyDdnQTyWcnyxEmbpr83PqSHa6Ltt_ao7ts',
@@ -27,31 +33,26 @@ function App() {
 		};
 		if (!firebase.apps.length)
 			firebase.initializeApp(firebaseConfig);
-	
+
 		firebase.auth().onAuthStateChanged((user)=> {
-			if (user) {
-	
-			}
-			else {
-	
-			}
+			setUser(user);
 		});
 	};
 	firebaseInit();
 
-	const [user, setUser] = useState(firebase.auth().currentUser);
-
 	return (
-		<Layout user={user}>
-			<Switch>
-				<Route path="/about" component={About} />
-				<Route path="/login" render={() => <Login setUser={setUser}/>} />
-				<Route path="/register" component={Register} />
-				<PrivateRoute path="/form" component={GuestBookForm} />
-				<PrivateRoute path="/table" component={GuestBookTable} />
-				<Redirect to={{pathname: "/about"}} />
-			</Switch>
-		</Layout>
+		<div className={cx('App')}>
+			<Layout user={user}>
+				<Switch>
+					<Route path="/about" component={About} />
+					<Route path="/login" render={() => <Login setUser={setUser}/>} />
+					<Route path="/register" component={Register} />
+					<PrivateRoute path="/form" user={user} component={GuestBookForm} />
+					<PrivateRoute path="/table" user={user} component={GuestBookTable} />
+					<Redirect to={{pathname: "/about"}} />
+				</Switch>
+			</Layout>
+		</div>
 	);
 }
 

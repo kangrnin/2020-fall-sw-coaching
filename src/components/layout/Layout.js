@@ -1,3 +1,5 @@
+import firebase from "firebase/app";
+
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Container, Button, Typography, Icon }	from '@material-ui/core';
@@ -7,9 +9,7 @@ import styles from './Layout.module.css';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
-function Layout(props) {
-	console.log(styles);
-
+function Layout({user: user, children: children}) {
 	const titles = (
 		<div className={cx('title-container')}>
 			<Typography className={cx('title')} variant="h6">
@@ -21,27 +21,34 @@ function Layout(props) {
 		</div>		
 	)
 
+	const handleLogout = async () => {
+		firebase.auth().signOut().catch(error=>alert(error.message));
+	}
+
 	const userUI = (
 		<div className={cx('btn-container')}>
 			<AccountCircle className={cx('user-icon')} fontSize="large"/>
 			<Typography className={cx('user')}>
-				{ props.user && props.user.email }
+				{ user && user.email }
 			</Typography>
-			<Link className={cx('btn')} to={{pathname: "/form"}} style={{textDecoration: 'none'}}>
+			<Link className={cx('btn')} to={{pathname: "/form"}}>
 				<Button variant="contained">방명록 작성</Button>
 			</Link>
-			<Link className={cx('btn')} to={{pathname: "/table"}} style={{textDecoration: 'none'}}>
+			<Link className={cx('btn')} to={{pathname: "/table"}}>
 				<Button variant="contained">방명록 조회</Button>
+			</Link>
+			<Link className={cx('btn')}>
+				<Button variant="contained" onClick={handleLogout}>로그아웃</Button>
 			</Link>
 		</div>
 	);
 
 	const guestUI = (
 		<div>
-			<Link className={cx('btn')} to={{pathname: "/login"}} style={{textDecoration: 'none'}}>
+			<Link className={cx('btn')} to={{pathname: "/login"}}>
 				<Button variant="contained">로그인</Button>
 			</Link>
-			<Link className={cx('btn')} to={{pathname: "/register"}} style={{textDecoration: 'none'}}>
+			<Link className={cx('btn')} to={{pathname: "/register"}}>
 				<Button variant="contained">회원가입</Button>
 			</Link>
 		</div>
@@ -52,11 +59,11 @@ function Layout(props) {
 			<AppBar>
 				<Toolbar className={cx('toolbar')}>
 					{ titles }
-					{ props.user ? userUI : guestUI }
+					{ user ? userUI : guestUI }
 				</Toolbar>
 			</AppBar>
 			<Container>
-				{props.children}
+				{ children }
 			</Container>
 		</Fragment>
 	);

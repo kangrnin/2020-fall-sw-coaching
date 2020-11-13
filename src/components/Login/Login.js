@@ -7,7 +7,11 @@ import {
 	Container, Typography, Card, Grid, TextField, Button
 } from "@material-ui/core";
 
-function Login({ setUser }) {
+import styles from './Login.module.css';
+import classNames from 'classnames/bind';
+const cx = classNames.bind(styles);
+
+function Login() {
 	const history = useHistory();
 
 	const [email, setEmail] = useState("");
@@ -15,24 +19,21 @@ function Login({ setUser }) {
 
 	const handleLogin = async () => {
 		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-			alert("로그인 안됨!!");
+			alert(error.message);
 		});
-	};
 
-	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			setUser(user);
+		const user = firebase.auth().currentUser;
+		if(user)
 			history.push('/form');
-		}
-	});
+	};
 
 	return (
 		<Container>
-			<Card style={{display:"inline-block"}}elevation={2} size="sm">
+			<Card className={cx('card-form')} elevation={2} size="sm">
 				<Grid container direction="column" spacing={2}>
 					<Grid item>
 						<Typography variant="h5">
-							로그인하세요
+							방명록 로그인
 						</Typography>
 					</Grid>
 					<Grid item>
@@ -42,7 +43,7 @@ function Login({ setUser }) {
 						<TextField label="비밀번호" type="password" onChange={e=>setPassword(e.target.value)}/>
 					</Grid>
 					<Grid item>
-						<Button variant="contained" color="primary" onClick={handleLogin}>
+						<Button className={cx('login-button')} variant="contained" color="primary" onClick={handleLogin}>
 							로그인
 						</Button>
 					</Grid>
