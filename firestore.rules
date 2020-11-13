@@ -1,13 +1,13 @@
 rules_version = '2';
 service cloud.firestore {
-  match /databases/person/{document} {
+  match /databases/guestbook/{document} {
     allow read, write:
-        if request.auth.admin == true
+        if request.auth.uid != null
   }
   match /databases/place/{document} {
     allow read:
-        true
+        if true
     allow write:
-        if resource.data.ownerId == request.auth.uid:
+        if resource.data.ownerId == request.auth.uid
   }
 }
