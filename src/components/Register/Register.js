@@ -28,18 +28,18 @@ function Register() {
 
 	const handleRegister = async () => {
 		firebase.auth().createUserWithEmailAndPassword(form.email, form.password)
-		.catch(error=>alert(error.message));
-
-		firebase.firestore().collection('place').add({
-			userId: firebase.auth().currentUser.uid,
-			email: form.email,
-			name: form.name,
-			phone: form.phone,
-			address: form.address
+		.catch(error=>alert(error.message))
+		.then(user=>{
+			firebase.firestore().collection('place').add({
+				userId: firebase.auth().currentUser.uid,
+				email: form.email,
+				name: form.name,
+				phone: form.phone,
+				address: form.address
+			})
+			.catch(error=>alert(error.message))
+			.then(()=>history.push('/form'));
 		})
-		.catch(error=>alert(error.message));
-		
-		history.push('/login');
 	};
 
 
