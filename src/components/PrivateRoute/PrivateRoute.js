@@ -5,8 +5,7 @@ import 'firebase/firestore';
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-function PrivateRoute({ component: Component, ...rest }) {
-	const user = firebase.auth().currentUser;
+function PrivateRoute({ component: Component, user: user, ...rest }) {
   return (
     <Route {...rest}
       render={ props =>

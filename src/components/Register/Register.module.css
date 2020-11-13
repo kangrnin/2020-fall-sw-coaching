@@ -1,0 +1,9 @@
+.card-form {
+    display: inline-block;
+    padding: 40px;
+    border-radius: 25px !important;
+}
+
+.register-button {
+    margin-top: 15px;
+}
