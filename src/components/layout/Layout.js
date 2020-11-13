@@ -31,22 +31,24 @@ function Layout({user: user, children: children}) {
 			<Typography className={cx('user')}>
 				{ user && user.email }
 			</Typography>
-			<Link className={cx('btn')} to={{pathname: "/form"}} style={{textDecoration: 'none'}}>
+			<Link className={cx('btn')} to={{pathname: "/form"}}>
 				<Button variant="contained">방명록 작성</Button>
 			</Link>
-			<Link className={cx('btn')} to={{pathname: "/table"}} style={{textDecoration: 'none'}}>
+			<Link className={cx('btn')} to={{pathname: "/table"}}>
 				<Button variant="contained">방명록 조회</Button>
 			</Link>
-			<Button className={cx('btn')} variant="contained" onClick={handleLogout}>로그아웃</Button>
+			<Link className={cx('btn')}>
+				<Button variant="contained" onClick={handleLogout}>로그아웃</Button>
+			</Link>
 		</div>
 	);
 
 	const guestUI = (
 		<div>
-			<Link className={cx('btn')} to={{pathname: "/login"}} style={{textDecoration: 'none'}}>
+			<Link className={cx('btn')} to={{pathname: "/login"}}>
 				<Button variant="contained">로그인</Button>
 			</Link>
-			<Link className={cx('btn')} to={{pathname: "/register"}} style={{textDecoration: 'none'}}>
+			<Link className={cx('btn')} to={{pathname: "/register"}}>
 				<Button variant="contained">회원가입</Button>
 			</Link>
 		</div>
